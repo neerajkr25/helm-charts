@@ -1,5 +1,4 @@
 deploy devops tools in eks cluster with helm charts
-pwd -C0mmitment#2023 -Grafana
 
 To pull helm chart locally 
 helm pull prometheus-community/prometheus --untar --untardir ./charts
