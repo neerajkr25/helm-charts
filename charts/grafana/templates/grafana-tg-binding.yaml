@@ -1,0 +1,11 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: grafana-service-tg-binding
+  namespace: monitoring
+spec:
+  serviceRef:
+    name: grafana # route traffic to the awesome-service
+    port: 80
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-south-1:423224728550:targetgroup/uat-cluster-tg/d61bfa26d9631bb2
+  
