@@ -1,0 +1,34 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 20
+    commands:
+      # Install kubectl
+      - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      - sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+      
+      # Install Helm
+      - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+  build:
+    commands:
+      # Fetch kubeconfig from eks
+      - aws eks update-kubeconfig --name uat-cluster --region ap-south-1 
+      
+      # check the kubectl api 
+      - kubectl get svc
+       
+      # Deploy aws ingress controller chart on eks
+      - helm upgrade aws-controller charts/aws-load-balancer-controller --namespace kube-system
+      
+      # Deploy promethe us chart in eks cluster
+      - helm upgrade prometheus charts/prometheus --namespace monitoring
+      
+      # Deploy Grafana chart in eks cluster
+      - helm upgrade grafana charts/grafana --namespace monitoring
+
+      # Deploy eks dasboard 
+      - helm upgrade eks-dashboard charts/kubernetes-dashboard --namespace monitoring --reuse-values
+ 
