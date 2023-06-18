@@ -1,0 +1,11 @@
+apiVersion: elbv2.k8s.aws/v1beta1
+kind: TargetGroupBinding
+metadata:
+  name: eksdashboard-service-tg-binding
+  namespace: monitoring
+spec:
+  serviceRef:
+    name: eks-dashboard-kubernetes-dashboard # route traffic to the awesome-service
+    port: 443
+  targetGroupARN: arn:aws:elasticloadbalancing:ap-south-1:423224728550:targetgroup/eks-dashboard-internal-tg/d63547c32f617ae9
+  
