@@ -15,7 +15,7 @@ phases:
   build:
     commands:
       # Fetch kubeconfig from eks
-      - aws eks update-kubeconfig --name uat-cluster --region ap-south-1 
+      - aws eks update-kubeconfig --name <cluster-name> --region ap-south-1 
       
       # check the kubectl api 
       - kubectl get svc
